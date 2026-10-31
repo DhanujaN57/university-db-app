@@ -1,4 +1,4 @@
-package com.example.universitydb.model;
+package com.example.university_db_app.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,23 +13,26 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "lecturer")
+@Table(name = "course")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Lecturer {
+public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 100)
-    private String name;
+    @Column(name = "code", nullable = false, unique = true, length = 10)
+    private String code;
 
-    @Column(name = "email", nullable = false, unique = true, length = 100)
-    private String email;
+    @Column(name = "title", nullable = false, length = 100)
+    private String title;
 
-    // MANY lecturers belong to ONE department (foreign key column: department_id)
+    @Column(name = "credits", nullable = false)
+    private Integer credits;
+
+    // MANY courses are taught by ONE lecturer (foreign key column: lecturer_id)
     @ManyToOne(optional = false)
-    @JoinColumn(name = "department_id")
-    private Department department;
+    @JoinColumn(name = "lecturer_id")
+    private Lecturer lecturer;
 }

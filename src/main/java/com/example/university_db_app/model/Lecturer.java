@@ -1,31 +1,34 @@
-package com.example.universitydb.model;
-
+package com.example.university_db_app.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "student")
+@Table(name = "lecturer")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Student {
+public class Lecturer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "student_code", nullable = false, unique = true, length = 10)
-    private String studentCode;
-
-    @Column(name = "full_name", nullable = false, length = 100)
-    private String fullName;
+    @Column(name = "name", nullable = false, length = 100)
+    private String name;
 
     @Column(name = "email", nullable = false, unique = true, length = 100)
     private String email;
+
+    // MANY lecturers belong to ONE department (foreign key column: department_id)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "department_id")
+    private Department department;
 }
